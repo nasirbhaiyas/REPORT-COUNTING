@@ -176,7 +176,10 @@
       Moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
       Sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
       Layers: '<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
-      Lock: '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>'
+      Lock: '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+      LayoutGrid: '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>',
+      ChevronDown: '<path d="m6 9 6 6 6-6"/>',
+      Globe: '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>'
     };
 
     const Icon = memo(({ name, className = "", onClick, title, style }) => {
@@ -347,16 +350,12 @@
     const STATUSES = ['Pending', 'In Progress', 'Completed', 'Cancelled'];
     const DEFAULT_TASK_TYPES = ['Appeal', 'Claim Review', 'Follow Up', 'TDI', 'IDR', 'Complaint', 'NSA', 'Final Review'];
     const DEFAULT_PREFIX_RULES = ['F Patient Account Number', 'Patient Account Number', 'Account Number', 'Claim ID:', 'Ticket #', 'Ref#'];
-
-    const COLOR_PALETTE_STYLES = [
-      { badge: 'bg-blue-600 text-white border-blue-600', card: 'border-blue-200 bg-blue-50/70 hover:bg-blue-100/80 dark:border-blue-800 dark:bg-blue-950/40 dark:hover:bg-blue-900/60', text: 'text-blue-800 dark:text-blue-200' },
-      { badge: 'bg-emerald-600 text-white border-emerald-600', card: 'border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100/80 dark:border-emerald-800 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/60', text: 'text-emerald-800 dark:text-emerald-200' },
-      { badge: 'bg-amber-500 text-white border-amber-500', card: 'border-amber-200 bg-amber-50/70 hover:bg-amber-100/80 dark:border-amber-800 dark:bg-amber-950/40 dark:hover:bg-amber-900/60', text: 'text-amber-800 dark:text-amber-200' },
-      { badge: 'bg-rose-600 text-white border-rose-600', card: 'border-rose-200 bg-rose-50/70 hover:bg-rose-100/80 dark:border-rose-800 dark:bg-rose-950/40 dark:hover:bg-rose-900/60', text: 'text-rose-800 dark:text-rose-200' },
-      { badge: 'bg-purple-600 text-white border-purple-600', card: 'border-purple-200 bg-purple-50/70 hover:bg-purple-100/80 dark:border-purple-800 dark:bg-purple-950/40 dark:hover:bg-purple-900/60', text: 'text-purple-800 dark:text-purple-200' },
-      { badge: 'bg-pink-600 text-white border-pink-600', card: 'border-pink-200 bg-pink-50/70 hover:bg-pink-100/80 dark:border-pink-800 dark:bg-pink-950/40 dark:hover:bg-pink-900/60', text: 'text-pink-800 dark:text-pink-200' },
-      { badge: 'bg-teal-600 text-white border-teal-600', card: 'border-teal-200 bg-teal-50/70 hover:bg-teal-100/80 dark:border-teal-800 dark:bg-teal-950/40 dark:hover:bg-teal-900/60', text: 'text-teal-800 dark:text-teal-200' },
-      { badge: 'bg-orange-600 text-white border-orange-600', card: 'border-orange-200 bg-orange-50/70 hover:bg-orange-100/80 dark:border-orange-800 dark:bg-orange-950/40 dark:hover:bg-orange-900/60', text: 'text-orange-800 dark:text-orange-200' }
+    const QUICK_LINKS = [
+      { label: 'Portfolio', url: 'https://nasirbhaiyas.github.io/-portfolio/' },
+      { label: 'Attendance Tracker', url: 'https://nasirbhaiyas.github.io/attendance-tracker/' },
+      { label: 'TDI', url: 'https://nasirbhaiyas.github.io/TDI/' },
+      { label: 'Report Counting', url: 'https://nasirbhaiyas.github.io/REPORT-COUNTING/' },
+      { label: 'Chat Apps', url: 'https://nasirbhaiyas.github.io/CHAT-APPS/' }
     ];
 
     const getTypeStyle = (index) => COLOR_PALETTE_STYLES[index % COLOR_PALETTE_STYLES.length];
@@ -826,8 +825,8 @@
       const [showRangePopup, setShowRangePopup] = useState(false);
       const [showDropdown, setShowDropdown] = useState(false);
       const dropdownRef = useRef(null);
-
-      // Reset pagination when filters change
+      const [showLinksDropdown, setShowLinksDropdown] = useState(false);
+      const linksDropdownRef = useRef(null);
       useEffect(() => {
         setHistoryPage(1);
       }, [searchTerm, filterType, onlyFlagged]);
@@ -882,6 +881,9 @@
         const handleClickOutside = (event) => {
           if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setShowDropdown(false);
+          }
+          if (linksDropdownRef.current && !linksDropdownRef.current.contains(event.target)) {
+            setShowLinksDropdown(false);
           }
         };
         document.addEventListener("mousedown", handleClickOutside);
@@ -3162,6 +3164,38 @@
                   <span className="font-extrabold text-lg tracking-tight text-slate-800 dark:text-white">
                     <span className="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">TicketFlow</span> - Nasir
                   </span>
+                </div>
+
+                <div className="relative" ref=${linksDropdownRef}>
+                  <button
+                    type="button"
+                    onClick=${() => setShowLinksDropdown(!showLinksDropdown)}
+                    className="flex items-center gap-1 px-2.5 py-2 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-blue-50 dark:text-slate-300 dark:hover:text-blue-400 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 transition-colors"
+                    title="Quick Apps & Links"
+                  >
+                    <${Icon} name="LayoutGrid" className="w-4 h-4" />
+                    <${Icon} name="ChevronDown" className=${`w-3.5 h-3.5 transition-transform duration-200 ${showLinksDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  ${showLinksDropdown && html`
+                    <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-blue-100 dark:border-slate-700 py-2 z-50">
+                      <div className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                        My Sites & Apps
+                      </div>
+                      ${QUICK_LINKS.map((link) => html`
+                        <a
+                          key=${link.url}
+                          href=${link.url}
+                          target="_self"
+                          onClick=${() => setShowLinksDropdown(false)}
+                          className="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-700/50 flex items-center justify-between gap-2 transition-colors"
+                        >
+                          <span className="truncate">${link.label}</span>
+                          <${Icon} name="Globe" className="w-3.5 h-3.5 text-blue-500/80 dark:text-blue-400/80 shrink-0" />
+                        </a>
+                      `)}
+                    </div>
+                  `}
                 </div>
 
                 <div className="flex items-center space-x-1 sm:space-x-2">
